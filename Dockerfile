@@ -16,6 +16,20 @@ RUN curl https://rclone.org/install.sh | sudo bash
 # Copy rclone tasks to /tmp, to potentially be used
 COPY deploy-container/rclone-tasks.json /tmp/rclone-tasks.json
 
+# Install NVM
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+RUN export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# Install NodeJS
+RUN nvm install node
+
+# Update NPM
+RUN npm install -g npm
+
+# Setup GIT config
+RUN git config --global user.name "Matheus Murden"
+RUN git config --global user.email "matheus@murden.dev"
+
 # Fix permissions for code-server
 RUN sudo chown -R coder:coder /home/coder/.local
 
