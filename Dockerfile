@@ -29,8 +29,6 @@ RUN sudo chown -R coder:coder /home/coder/.local
 # Install a VS Code extension:
 # Note: we use a different marketplace than VS Code. See https://github.com/cdr/code-server/blob/main/docs/FAQ.md#differences-compared-to-vs-code
 #RUN code-server --install-extension pmndrs.pmndrs
-RUN curl "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/pmndrs/vsextensions/pmndrs/0.3.2/vspackage" -o pmndrs.vsix 
-RUN code-server --install-extension pmndrs.vsix
 
 # Install apt packages:
 # RUN sudo apt-get install -y ubuntu-make
