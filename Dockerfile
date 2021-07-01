@@ -17,11 +17,11 @@ RUN curl https://rclone.org/install.sh | sudo bash
 COPY deploy-container/rclone-tasks.json /tmp/rclone-tasks.json
 
 # Install NVM
-RUN git clone https://github.com/nvm-sh/nvm.git .nvm && cd .nvm && git checkout v0.38.0 && . nvm.sh
-RUN export NVM_DIR="$HOME/.nvm"
-RUN [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-RUN [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
+RUN export NVM_DIR="$HOME/.nvm" && (
+  git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
+  cd "$NVM_DIR"
+  git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
+) && \. "$NVM_DIR/nvm.sh"
 
 # Install NodeJS
 RUN nvm install node
